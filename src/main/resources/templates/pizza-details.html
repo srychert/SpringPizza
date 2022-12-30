@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Pizza Details</title>
+		<link th:href="@{/css/normalize.css}" rel="stylesheet" />
+		<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+		<script type="text/javascript" th:src="@{/js/actions.js}" defer></script>
+	</head>
+	<body>
+		<div th:replace="fragments/banner.html :: banner"></div>
+		<div>
+			ID: <span th:text="${pizza.id}"></span><br />
+			Name: <span th:text="${pizza.name}"></span>
+		</div>
+		<button type="button" th:onclick="hello()">Hello There</button>
+	</body>
+</html>

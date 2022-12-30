@@ -28,7 +28,8 @@ public class PizzaService {
     }
 
     public Pizza add(Pizza pizza) {
-        return pizzaRepository.save(pizza);
+        var pizzaToAdd = new Pizza(formatName(pizza.getName()));
+        return pizzaRepository.save(pizzaToAdd);
     }
 
     public Pizza delete(Long id) {
@@ -43,8 +44,12 @@ public class PizzaService {
         var pizza = pizzaRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException("No such Pizza id in DB"));
 
-        pizza.setName(updatedPizza.getName());
+        pizza.setName(formatName(updatedPizza.getName()));
 
         return pizzaRepository.save(pizza);
+    }
+
+    public String formatName(String name) {
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
     }
 }

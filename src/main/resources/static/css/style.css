@@ -1,0 +1,17 @@
+body {
+    background-color: darkcyan;
+    color: white;
+}
+
+.banner {
+    padding: 20px;
+    text-align: center;
+}
+
+.banner>h1 {
+    cursor: pointer;
+}
+
+.error-li {
+    color: red;
+}
