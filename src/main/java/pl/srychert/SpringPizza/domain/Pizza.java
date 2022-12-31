@@ -10,6 +10,7 @@ import pl.srychert.SpringPizza.validation.TailLowerCase;
 @Entity
 @Getter
 @Setter
+@Table(name = "pizza", schema = "public")
 public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
