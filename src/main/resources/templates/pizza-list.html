@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
 		<title>Pizza List</title>
-		<link th:href="@{/css/normalize.css}" rel="stylesheet" />
-		<link th:href="@{/css/style.css}" rel="stylesheet" />
 	</head>
 
 	<body>
-		<div th:replace="fragments/banner.html :: banner"></div>
+		<div th:replace="~{fragments/banner.html :: banner}"></div>
 		<div th:each="pizza : ${pizzaList}">
 			<div th:text="${pizza.name}" th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''"></div>
 			<a th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}">

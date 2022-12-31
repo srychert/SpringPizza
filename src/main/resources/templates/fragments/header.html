@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:fragment="common_header">
+		<title th:replace="${title}">Spring Pizza</title>
+
+		<!-- Common -->
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link th:href="@{/css/normalize.css}" rel="stylesheet" />
+		<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+		<!--/* Per-page placeholder for additional links and scripts */-->
+		<th:block th:if="${links}">
+			<th:block th:replace="${links}" />
+		</th:block>
+		<th:block th:if="${scripts}">
+			<th:block th:replace="${scripts}" />
+		</th:block>
+	</head>
+
+	<body></body>
+</html>
