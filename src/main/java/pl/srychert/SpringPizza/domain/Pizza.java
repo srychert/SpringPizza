@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import pl.srychert.SpringPizza.validation.Capitalized;
+import pl.srychert.SpringPizza.validation.TailLowerCase;
 
 @Entity
 @Getter
@@ -15,6 +17,8 @@ public class Pizza {
     @Setter(AccessLevel.NONE)
     private Long id;
     @NotBlank
+    @Capitalized
+    @TailLowerCase
     @Column(unique = true)
     private String name;
 

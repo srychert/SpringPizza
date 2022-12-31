@@ -44,7 +44,7 @@ public class WebPizzaController {
             return "pizza-add";
         }
 
-        var pizzaInDb = pizzaRepository.findByName(pizzaService.formatName(pizza.getName()));
+        var pizzaInDb = pizzaRepository.findByName(pizza.getName());
         if (pizzaInDb.isPresent()) {
             result.rejectValue("name", "error.Name", "Pizza with this name already exists");
             return "pizza-add";
