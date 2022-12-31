@@ -6,11 +6,17 @@
 
 	<body>
 		<div th:replace="~{fragments/banner.html :: banner}"></div>
-		<div th:each="pizza : ${pizzaList}">
-			<div th:text="${pizza.name}" th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''"></div>
-			<a th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}">
-				<input type="button" value="Delete" />
-			</a>
+		<div class="container-main">
+			<div class="pizza-list">
+				<div class="pizza-box" th:each="pizza : ${pizzaList}">
+					<span class="pizza-link" th:text="${pizza.name}" th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''"></span>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<a th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}">
+							<input type="button" value="Delete" />
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

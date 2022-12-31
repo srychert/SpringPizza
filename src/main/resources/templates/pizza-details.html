@@ -6,13 +6,17 @@
 	</head>
 	<body>
 		<div th:replace="~{fragments/banner.html :: banner}"></div>
-		<div>
-			ID: <span th:text="${pizza.id}"></span><br />
-			Name: <span th:text="${pizza.name}"></span>
+		<div class="container-main">
+			<div>
+				ID: <span th:text="${pizza.id}"></span><br />
+				Name: <span th:text="${pizza.name}"></span>
+			</div>
+			<button th:onclick="hello()">Hello There</button>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<a th:href="@{/pizza/edit/{id}(id=${pizza.getId()})}">
+					<input type="button" value="Edit" />
+				</a>
+			</div>
 		</div>
-		<button th:onclick="hello()">Hello There</button>
-		<a th:href="@{/pizza/edit/{id}(id=${pizza.getId()})}">
-			<input type="button" value="Edit" />
-		</a>
 	</body>
 </html>
