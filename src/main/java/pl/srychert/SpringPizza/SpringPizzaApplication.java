@@ -5,8 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.srychert.SpringPizza.domain.Pizza;
-import pl.srychert.SpringPizza.repository.PizzaRepository;
+import pl.srychert.SpringPizza.domain.User;
 import pl.srychert.SpringPizza.service.PizzaService;
+import pl.srychert.SpringPizza.service.UserService;
+
+import java.util.List;
 
 @SpringBootApplication
 public class SpringPizzaApplication {
@@ -16,12 +19,21 @@ public class SpringPizzaApplication {
     }
 
     @Bean
-    public CommandLineRunner setupApp(PizzaService pizzaService, PizzaRepository pizzaRepository) {
+    public CommandLineRunner setupApp(PizzaService pizzaService, UserService userService) {
         return (args) -> {
             var pizza = new Pizza("Farmerska");
             pizzaService.add(pizza);
-            var pizzaInDb = pizzaRepository.findByName(pizza.getName()).get();
-            System.out.printf("Id: %s\nName: %s", pizzaInDb.getId(), pizzaInDb.getName());
+
+            User user = new User("user",
+                    "pass",
+                    List.of("ROLE_USER"));
+
+            User admin = new User("admin",
+                    "pass",
+                    List.of("ROLE_USER", "ROLE_ADMIN"));
+
+            userService.addWithRoles(user);
+            userService.addWithRoles(admin);
         };
     }
 

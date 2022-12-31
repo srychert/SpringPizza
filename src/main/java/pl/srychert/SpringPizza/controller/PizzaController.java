@@ -11,7 +11,11 @@ import pl.srychert.SpringPizza.service.PizzaService;
 public class PizzaController {
 
     @Autowired
-    PizzaService pizzaService;
+    private final PizzaService pizzaService;
+
+    public PizzaController(PizzaService pizzaService) {
+        this.pizzaService = pizzaService;
+    }
 
     @GetMapping
     public Iterable<Pizza> getAll() {
