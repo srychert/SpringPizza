@@ -31,7 +31,7 @@ public class User {
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.roles = List.of("USER");
+        this.roles = List.of("ROLE_USER");
     }
 
     public User() {
