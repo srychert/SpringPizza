@@ -2,6 +2,7 @@ package pl.srychert.SpringPizza.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class WebPizzaController {
     }
 
     @GetMapping("/add")
+    @Secured("ROLE_ADMIN")
     public String showAddForm(Pizza pizza) {
         return "pizza-add";
     }
@@ -42,6 +44,7 @@ public class WebPizzaController {
     }
 
     @PostMapping(path = "/add")
+    @Secured("ROLE_ADMIN")
     public String add(@Valid Pizza pizza, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "pizza-add";
@@ -58,12 +61,14 @@ public class WebPizzaController {
     }
 
     @GetMapping("/delete/{pizzaId}")
+    @Secured("ROLE_ADMIN")
     public String delete(@PathVariable Long pizzaId, Model model) {
         pizzaService.delete(pizzaId);
         return "redirect:/pizza/list";
     }
 
     @GetMapping("/edit/{pizzaId}")
+    @Secured("ROLE_ADMIN")
     public String showEditForm(@PathVariable Long pizzaId, Model model) {
         var pizza = pizzaService.get(pizzaId);
 
@@ -72,6 +77,7 @@ public class WebPizzaController {
     }
 
     @PostMapping("/update/{pizzaId}")
+    @Secured("ROLE_ADMIN")
     public String update(@PathVariable Long pizzaId, @Valid Pizza pizza, BindingResult result, Model model) {
         if (result.hasErrors()) {
             pizza.setId(pizzaId);

@@ -5,11 +5,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import pl.srychert.SpringPizza.auth.CustomAuthenticationProvider;
 
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true
+)
 public class SecurityConfig {
     @Autowired
     private final CustomAuthenticationProvider authenticationProvider;
@@ -29,14 +37,24 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((auth) -> {
                             auth
+                                    .requestMatchers("/",
+                                            "/favicon.ico",
+                                            "/*/*.png",
+                                            "/*/*.gif",
+                                            "/*/*.svg",
+                                            "/*/*.jpg",
+                                            "/*/*.html",
+                                            "/*/*.css",
+                                            "/*/*.js").permitAll()
                                     .requestMatchers("/api/pizza/**").hasRole("ADMIN")
-                                    .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "USER")
+                                    .requestMatchers("/pizza/list/**").permitAll()
                                     .anyRequest().authenticated();
 //                            .anyRequest().permitAll();
                         }
                 );
-        http.formLogin(Customizer.withDefaults());
+        http.formLogin().defaultSuccessUrl("/pizza/list");
         http.httpBasic(Customizer.withDefaults());
+        http.logout().logoutSuccessUrl("/pizza/list");
         return http.build();
     }
 }
