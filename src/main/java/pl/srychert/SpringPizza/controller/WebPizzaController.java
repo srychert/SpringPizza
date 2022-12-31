@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.srychert.SpringPizza.domain.Pizza;
 import pl.srychert.SpringPizza.repository.PizzaRepository;
 import pl.srychert.SpringPizza.service.PizzaService;
@@ -60,11 +63,20 @@ public class WebPizzaController {
         return "redirect:/pizza/list";
     }
 
+    @GetMapping("/edit/{pizzaId}")
+    public String showEditForm(@PathVariable Long pizzaId, Model model) {
+        var pizza = pizzaService.get(pizzaId);
+
+        model.addAttribute("pizza", pizza);
+        return "pizza-edit";
+    }
+
     @PostMapping("/update/{pizzaId}")
-    public String update(@PathVariable Long pizzaId, @Valid @RequestBody Pizza pizza, BindingResult result, Model model) {
+    public String update(@PathVariable Long pizzaId, @Valid Pizza pizza, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            System.out.println(result);
-            return "pizza-list";
+            pizza.setId(pizzaId);
+            model.addAttribute("pizza", pizza);
+            return "pizza-edit";
         }
 
         pizzaService.update(pizzaId, pizza);

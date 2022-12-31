@@ -2,7 +2,6 @@ package pl.srychert.SpringPizza.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import pl.srychert.SpringPizza.validation.Capitalized;
@@ -14,7 +13,6 @@ import pl.srychert.SpringPizza.validation.TailLowerCase;
 public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
     private Long id;
     @NotBlank
     @Capitalized
