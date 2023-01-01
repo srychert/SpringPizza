@@ -40,4 +40,14 @@ public class FavouritesController {
     public Favourites update(@PathVariable Long favouritesId, @Valid @RequestBody Favourites favourites) {
         return favouritesService.update(favouritesId, favourites);
     }
+
+    @PutMapping("/{favouritesId}/pizza-add/{pizzaId}")
+    public Favourites addPizza(@PathVariable Long favouritesId, @PathVariable Long pizzaId) {
+        return favouritesService.addPizza(favouritesId, pizzaId);
+    }
+
+    @PutMapping("/{favouritesId}/pizza-remove/{pizzaId}")
+    public Favourites removePizza(@PathVariable Long favouritesId, @PathVariable Long pizzaId) {
+        return favouritesService.removePizza(favouritesId, pizzaId);
+    }
 }

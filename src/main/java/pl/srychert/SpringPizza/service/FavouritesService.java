@@ -1,6 +1,7 @@
 package pl.srychert.SpringPizza.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import pl.srychert.SpringPizza.domain.Favourites;
 import pl.srychert.SpringPizza.domain.Pizza;
@@ -70,11 +71,12 @@ public class FavouritesService {
     }
 
     public Favourites update(Long id, Favourites updatedFavourites) {
-        var favourites = favouritesRepository.findById(id)
+        Favourites favourites = favouritesRepository
+                .findById(id)
                 .orElseThrow(() -> new ApiRequestException("No such Favourites id in DB"));
 
         Long clientId = updatedFavourites.getClient().getId();
-        
+
         favouritesRepository.findByClientId(clientId).ifPresent(fav -> {
             throw new ApiRequestException("Favourites with this client id already exists");
         });
@@ -90,5 +92,39 @@ public class FavouritesService {
         favourites.setPizzas(pizzas);
 
         return favouritesRepository.save(favourites);
+    }
+
+    public Favourites addPizza(Long favouritesId, Long pizzaId) {
+        Favourites favourites = favouritesRepository
+                .findById(favouritesId)
+                .orElseThrow(() -> new ApiRequestException("No such Favourites id in DB"));
+
+        Pizza pizza = pizzaRepository
+                .findById(pizzaId)
+                .orElseThrow(() -> new ApiRequestException("No such Pizza id in DB"));
+
+        @NotNull List<Pizza> updatedPizzas = favourites.getPizzas();
+        boolean pizzaInFav = updatedPizzas.stream().map(Pizza::getId).toList().contains(pizzaId);
+        if (!pizzaInFav) {
+            updatedPizzas.add(pizza);
+            favourites.setPizzas(updatedPizzas);
+        }
+        return favourites;
+    }
+
+    public Favourites removePizza(Long favouritesId, Long pizzaId) {
+        Favourites favourites = favouritesRepository
+                .findById(favouritesId)
+                .orElseThrow(() -> new ApiRequestException("No such Favourites id in DB"));
+
+        Pizza pizza = pizzaRepository
+                .findById(pizzaId)
+                .orElseThrow(() -> new ApiRequestException("No such Pizza id in DB"));
+
+        @NotNull List<Pizza> updatedPizzas = favourites.getPizzas()
+                .stream().filter(p -> !p.getId().equals(pizzaId)).toList();
+        
+        favourites.setPizzas(updatedPizzas);
+        return favourites;
     }
 }
