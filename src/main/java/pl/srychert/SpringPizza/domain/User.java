@@ -1,5 +1,6 @@
 package pl.srychert.SpringPizza.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -21,6 +22,13 @@ public class User {
     @NotBlank
     private String password;
     private List<String> roles;
+
+    @OneToOne
+    private Favourites favourites;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
 
     public User(String userName, String password, List<String> roles) {
         this.userName = userName;

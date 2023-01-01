@@ -7,6 +7,8 @@ import lombok.Setter;
 import pl.srychert.SpringPizza.validation.Capitalized;
 import pl.srychert.SpringPizza.validation.TailLowerCase;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +22,12 @@ public class Pizza {
     @TailLowerCase
     @Column(unique = true)
     private String name;
+
+    @ManyToMany
+    private List<Order> orders;
+
+    @ManyToMany
+    private List<Favourites> favourites;
 
     public Pizza(String name) {
         this.name = name;
