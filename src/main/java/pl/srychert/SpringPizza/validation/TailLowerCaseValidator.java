@@ -9,6 +9,9 @@ public class TailLowerCaseValidator implements ConstraintValidator<TailLowerCase
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
+        if (name == null || name.length() < 1) {
+            return false;
+        }
         String tail = name.substring(1);
         return tail.toLowerCase().equals(tail);
     }

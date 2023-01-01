@@ -9,6 +9,9 @@ public class CapitalizedValidator implements ConstraintValidator<Capitalized, St
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
+        if (name == null || name.equals("")) {
+            return false;
+        }
         char first = name.charAt(0);
         return Character.isUpperCase(first);
     }
