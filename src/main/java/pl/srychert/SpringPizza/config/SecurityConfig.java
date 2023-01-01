@@ -46,7 +46,6 @@ public class SecurityConfig {
                                             "/*/*.html",
                                             "/*/*.css",
                                             "/*/*.js").permitAll()
-                                    .requestMatchers("/api/pizza/**").hasRole("ADMIN")
                                     .requestMatchers("/pizza/list/**").permitAll()
                                     .anyRequest().authenticated();
 //                            .anyRequest().permitAll();
