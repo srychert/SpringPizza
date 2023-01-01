@@ -9,6 +9,7 @@ import pl.srychert.SpringPizza.domain.User;
 import pl.srychert.SpringPizza.service.PizzaService;
 import pl.srychert.SpringPizza.service.UserService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootApplication
@@ -21,7 +22,7 @@ public class SpringPizzaApplication {
     @Bean
     public CommandLineRunner setupApp(PizzaService pizzaService, UserService userService) {
         return (args) -> {
-            var pizza = new Pizza("Farmerska");
+            var pizza = new Pizza("Farmerska", new BigDecimal(25));
             pizzaService.add(pizza);
 
             User user = new User("user",

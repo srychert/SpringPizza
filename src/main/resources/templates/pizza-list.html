@@ -9,7 +9,10 @@
 		<div class="container-main">
 			<div class="pizza-list">
 				<div class="pizza-box" th:each="pizza : ${pizzaList}">
-					<span class="pizza-link" th:text="${pizza.name}" th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''"></span>
+					<div th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''">
+						<span class="pizza-link" th:text="${pizza.name}"></span>
+						<span class="pizza-link" th:text="${pizza.price}"></span>
+					</div>
 					<div sec:authorize="hasRole('ROLE_ADMIN')">
 						<a th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}">
 							<input type="button" value="Delete" />

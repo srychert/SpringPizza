@@ -27,7 +27,7 @@ public class WebPizzaController {
 
     @GetMapping("/list")
     String getPizzaList(Model model) {
-        model.addAttribute("pizzaList", pizzaService.getAll());
+        model.addAttribute("pizzaList", pizzaService.getAllByPriceAsc());
         return "pizza-list";
     }
 

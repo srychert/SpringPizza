@@ -9,7 +9,8 @@
 		<div class="container-main">
 			<div>
 				ID: <span th:text="${pizza.id}"></span><br />
-				Name: <span th:text="${pizza.name}"></span>
+				Name: <span th:text="${pizza.name}"></span><br />
+				Price: <span th:text="${pizza.price}"></span>
 			</div>
 			<button th:onclick="hello()">Hello There</button>
 			<div sec:authorize="hasRole('ROLE_ADMIN')">

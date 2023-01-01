@@ -21,6 +21,14 @@ public class PizzaService {
         return pizzaRepository.findAll();
     }
 
+    public Iterable<Pizza> getAllByPriceAsc() {
+        return pizzaRepository.findAllByOrderByPriceAsc();
+    }
+
+    public Iterable<Pizza> getAllByPriceDesc() {
+        return pizzaRepository.findAllByOrderByPriceDesc();
+    }
+
     public Pizza get(Long id) {
         return pizzaRepository
                 .findById(id)
@@ -28,7 +36,7 @@ public class PizzaService {
     }
 
     public Pizza add(Pizza pizza) {
-        var pizzaToAdd = new Pizza(pizza.getName());
+        var pizzaToAdd = new Pizza(pizza.getName(), pizza.getPrice());
         return pizzaRepository.save(pizzaToAdd);
     }
 
@@ -45,6 +53,7 @@ public class PizzaService {
                 .orElseThrow(() -> new ApiRequestException("No such Pizza id in DB"));
 
         pizza.setName(updatedPizza.getName());
+        pizza.setPrice(updatedPizza.getPrice());
 
         return pizzaRepository.save(pizza);
     }

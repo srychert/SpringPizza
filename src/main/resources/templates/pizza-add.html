@@ -8,10 +8,15 @@
 		<div class="container-main">
 			<form action="#" th:action="@{/pizza/add}" th:object="${pizza}" method="post">
 				<label for="name">Name</label>
-				<input type="text" th:field="*{name}" id="name" placeholder="Name" />
+				<input type="text" th:field="*{name}" id="name" placeholder="Name" required />
 				<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span> -->
 				<ul>
 					<li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error-li" />
+				</ul>
+				<label for="price">Price</label>
+				<input type="number" step="0.01" th:field="*{price}" id="price" required />
+				<ul>
+					<li th:each="err : ${#fields.errors('price')}" th:text="${err}" class="error-li" />
 				</ul>
 				<input type="submit" value="Add Pizza" />
 			</form>

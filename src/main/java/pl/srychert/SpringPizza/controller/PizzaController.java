@@ -19,8 +19,16 @@ public class PizzaController {
     }
 
     @GetMapping
-    public Iterable<Pizza> getAll() {
-        return pizzaService.getAll();
+    public Iterable<Pizza> getAll(@RequestParam(required = false) String sort) {
+        if (sort == null) {
+            return pizzaService.getAll();
+        }
+
+        return switch (sort) {
+            case "asc" -> pizzaService.getAllByPriceAsc();
+            case "desc" -> pizzaService.getAllByPriceDesc();
+            default -> pizzaService.getAll();
+        };
     }
 
     @GetMapping("/{pizzaId}")
