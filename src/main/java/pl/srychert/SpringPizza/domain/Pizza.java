@@ -1,5 +1,6 @@
 package pl.srychert.SpringPizza.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -23,10 +24,12 @@ public class Pizza {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(mappedBy = "pizzas")
     private List<Order> orders;
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(mappedBy = "pizzas")
     private List<Favourites> favourites;
 
     public Pizza(String name) {

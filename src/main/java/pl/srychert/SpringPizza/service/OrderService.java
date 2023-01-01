@@ -3,18 +3,29 @@ package pl.srychert.SpringPizza.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.srychert.SpringPizza.domain.Order;
+import pl.srychert.SpringPizza.domain.Pizza;
+import pl.srychert.SpringPizza.domain.User;
 import pl.srychert.SpringPizza.exception.ApiRequestException;
 import pl.srychert.SpringPizza.repository.OrderRepository;
+import pl.srychert.SpringPizza.repository.PizzaRepository;
+import pl.srychert.SpringPizza.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class OrderService {
     final OrderRepository orderRepository;
+    final PizzaRepository pizzaRepository;
+    final UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository,
+                        PizzaRepository pizzaRepository,
+                        UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.pizzaRepository = pizzaRepository;
+        this.userRepository = userRepository;
     }
 
     public Iterable<Order> getAll() {
@@ -28,7 +39,18 @@ public class OrderService {
     }
 
     public Order add(Order order) {
-        var orderToAdd = new Order(order.getPizzas(), order.getClient());
+        Long clientId = order.getClient().getId();
+        User client = userRepository
+                .findById(clientId)
+                .orElseThrow(() -> new ApiRequestException("No such User id in DB"));
+
+        List<Long> pizzaIds = order.getPizzas().stream().map(Pizza::getId).toList();
+        List<Pizza> pizzas = (List<Pizza>) pizzaRepository.findAllById(pizzaIds);
+
+        Order orderToAdd = new Order();
+        orderToAdd.setClient(client);
+        orderToAdd.setPizzas(pizzas);
+
         return orderRepository.save(orderToAdd);
     }
 
@@ -44,8 +66,16 @@ public class OrderService {
         var order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException("No such Order id in DB"));
 
-        order.setPizzas(updatedOrder.getPizzas());
-        order.setClient(updatedOrder.getClient());
+        Long clientId = updatedOrder.getClient().getId();
+        User client = userRepository
+                .findById(clientId)
+                .orElseThrow(() -> new ApiRequestException("No such User id in DB"));
+
+        List<Long> pizzaIds = updatedOrder.getPizzas().stream().map(Pizza::getId).toList();
+        List<Pizza> pizzas = (List<Pizza>) pizzaRepository.findAllById(pizzaIds);
+
+        order.setClient(client);
+        order.setPizzas(pizzas);
 
         return orderRepository.save(order);
     }

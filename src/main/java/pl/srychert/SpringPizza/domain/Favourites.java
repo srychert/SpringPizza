@@ -1,6 +1,5 @@
 package pl.srychert.SpringPizza.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,19 +16,13 @@ public class Favourites {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "favourites")
+    @ManyToMany(fetch = FetchType.EAGER)
     @NotNull
     private List<Pizza> pizzas;
 
-    @OneToOne(mappedBy = "favourites")
+    @OneToOne
     @NotNull
     private User client;
-
-    public Favourites(List<Pizza> pizzas, User client) {
-        this.pizzas = pizzas;
-        this.client = client;
-    }
 
     public Favourites() {
     }

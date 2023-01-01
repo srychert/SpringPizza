@@ -1,7 +1,7 @@
 package pl.srychert.SpringPizza.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,19 +16,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "orders")
-//    @NotNull
+    @ManyToMany(fetch = FetchType.EAGER)
+    @NotNull
     private List<Pizza> pizzas;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-//    @NotNull
+    @ManyToOne
+    @NotNull
     private User client;
-
-    public Order(List<Pizza> pizzas, User client) {
-        this.pizzas = pizzas;
-        this.client = client;
-    }
 
     public Order() {
     }

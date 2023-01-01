@@ -23,7 +23,8 @@ public class User {
     private String password;
     private List<String> roles;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private Favourites favourites;
 
     @JsonIgnore
