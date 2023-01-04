@@ -6,11 +6,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.srychert.SpringPizza.domain.Pizza;
+import pl.srychert.SpringPizza.enums.Sorts;
 import pl.srychert.SpringPizza.repository.PizzaRepository;
 import pl.srychert.SpringPizza.service.PizzaService;
 
@@ -26,8 +24,12 @@ public class WebPizzaController {
     }
 
     @GetMapping("/list")
-    String getPizzaList(Model model) {
-        model.addAttribute("pizzaList", pizzaService.getAllByPriceAsc());
+    String getPizzaList(@RequestParam(required = false) Sorts sort, Model model) {
+        if (sort == null) {
+            model.addAttribute("pizzaList", pizzaService.getAllByPriceAsc());
+        } else {
+            model.addAttribute("pizzaList", pizzaService.getAllSortedByPrice(sort));
+        }
         return "pizza-list";
     }
 

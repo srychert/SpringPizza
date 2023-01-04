@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.srychert.SpringPizza.domain.Pizza;
+import pl.srychert.SpringPizza.enums.Sorts;
 import pl.srychert.SpringPizza.service.PizzaService;
 
 @RestController
@@ -19,16 +20,11 @@ public class PizzaController {
     }
 
     @GetMapping
-    public Iterable<Pizza> getAll(@RequestParam(required = false) String sort) {
+    public Iterable<Pizza> getAll(@RequestParam(required = false) Sorts sort) {
         if (sort == null) {
             return pizzaService.getAll();
         }
-
-        return switch (sort) {
-            case "asc" -> pizzaService.getAllByPriceAsc();
-            case "desc" -> pizzaService.getAllByPriceDesc();
-            default -> pizzaService.getAll();
-        };
+        return pizzaService.getAllSortedByPrice(sort);
     }
 
     @GetMapping("/{pizzaId}")

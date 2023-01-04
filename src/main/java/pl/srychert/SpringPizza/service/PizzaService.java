@@ -3,6 +3,7 @@ package pl.srychert.SpringPizza.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.srychert.SpringPizza.domain.Pizza;
+import pl.srychert.SpringPizza.enums.Sorts;
 import pl.srychert.SpringPizza.exception.ApiRequestException;
 import pl.srychert.SpringPizza.repository.PizzaRepository;
 
@@ -27,6 +28,14 @@ public class PizzaService {
 
     public Iterable<Pizza> getAllByPriceDesc() {
         return pizzaRepository.findAllByOrderByPriceDesc();
+    }
+
+    public Iterable<Pizza> getAllSortedByPrice(Sorts sort) {
+        return switch (sort) {
+            case ASC -> pizzaRepository.findAllByOrderByPriceAsc();
+            case DESC -> pizzaRepository.findAllByOrderByPriceDesc();
+            default -> pizzaRepository.findAll();
+        };
     }
 
     public Pizza get(Long id) {
