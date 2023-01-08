@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.srychert.SpringPizza.domain.Pizza;
 import pl.srychert.SpringPizza.domain.User;
+import pl.srychert.SpringPizza.repository.PizzaRepository;
+import pl.srychert.SpringPizza.repository.UserRepository;
 import pl.srychert.SpringPizza.service.PizzaService;
 import pl.srychert.SpringPizza.service.UserService;
 
@@ -20,21 +22,30 @@ public class SpringPizzaApplication {
     }
 
     @Bean
-    public CommandLineRunner setupApp(PizzaService pizzaService, UserService userService) {
+    public CommandLineRunner setupApp(PizzaService pizzaService, PizzaRepository pizzaRepository,
+                                      UserRepository userRepository, UserService userService) {
         return (args) -> {
-            var pizza = new Pizza("Farmerska", new BigDecimal(25));
-            pizzaService.add(pizza);
+            Pizza pizza = new Pizza("Pepperoni", new BigDecimal(25));
+
+            if (pizzaRepository.findByName("Pepperoni").isEmpty()) {
+                pizzaService.add(pizza);
+            }
 
             User user = new User("user",
                     "pass",
                     List.of("ROLE_USER"));
 
+            if (userRepository.findByUserName("user").isEmpty()) {
+                userService.addWithRoles(user);
+            }
+
             User admin = new User("admin",
                     "pass",
                     List.of("ROLE_USER", "ROLE_ADMIN"));
 
-            userService.addWithRoles(user);
-            userService.addWithRoles(admin);
+            if (userRepository.findByUserName("admin").isEmpty()) {
+                userService.addWithRoles(admin);
+            }
         };
     }
 
