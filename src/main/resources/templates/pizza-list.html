@@ -8,9 +8,6 @@
 	<body>
 		<div class="container-main">
 			<div th:replace="~{fragments/banner.html :: banner}"></div>
-			<div class="admin-links" sec:authorize="hasRole('ROLE_ADMIN')">
-				<a class="btn-secondary" th:href="@{/pizza/add}"> Add </a>
-			</div>
 			<div class="pizza-list">
 				<div class="pizza-box" th:each="pizza : ${pizzaList}">
 					<div th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''">

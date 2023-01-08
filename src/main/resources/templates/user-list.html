@@ -7,9 +7,6 @@
 	<body>
 		<div class="container-main">
 			<div th:replace="~{fragments/banner.html :: banner}"></div>
-			<div class="admin-links" sec:authorize="hasRole('ROLE_ADMIN')">
-				<a class="btn-secondary" th:href="@{/user/add}"> Add </a>
-			</div>
 			<div class="user-list">
 				<div class="user-box" th:each="user : ${userList}">
 					<div th:onclick="'window.location.href=\'/user/' + ${user.getId()} + '\''">
