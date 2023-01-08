@@ -24,7 +24,7 @@ public class User {
     private List<String> roles;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "client")
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private Favourites favourites;
 
     @JsonIgnore
