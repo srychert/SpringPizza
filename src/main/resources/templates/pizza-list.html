@@ -5,8 +5,11 @@
 	</head>
 
 	<body>
-		<div th:replace="~{fragments/banner.html :: banner}"></div>
 		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<div class="admin-links" sec:authorize="hasRole('ROLE_ADMIN')">
+				<a class="btn-secondary" th:href="@{/pizza/add}"> Add </a>
+			</div>
 			<div class="pizza-list">
 				<div class="pizza-box" th:each="pizza : ${pizzaList}">
 					<div th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''">
@@ -14,9 +17,7 @@
 						<span class="pizza-link" th:text="${pizza.price}"></span>
 					</div>
 					<div sec:authorize="hasRole('ROLE_ADMIN')">
-						<a th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}">
-							<input type="button" value="Delete" />
-						</a>
+						<a class="btn-secondary" th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}"> Delete </a>
 					</div>
 				</div>
 			</div>

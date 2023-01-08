@@ -1,25 +1,29 @@
+:root {
+    --bg: hsl(180, 100%, 25%);
+    --primary: hsl(180, 70%, 70%);
+    --secondary: hsl(20, 100%, 64%);
+    --text: hsl(167, 39%, 93%);
+
+}
+
 body {
-    background-color: darkcyan;
-    color: white;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 a {
     text-decoration: none;
 }
 
-.banner {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+input {
+    padding: 0.5em;
+    border-radius: 5px;
+    border: none;
 }
 
-.banner>h1 {
-    cursor: pointer;
-}
-
-.error-li {
-    color: red;
+input:focus {
+    outline: none !important;
+    box-shadow: 0 0 10px var(--text);
 }
 
 .container-main {
@@ -28,13 +32,85 @@ a {
     margin-right: auto;
 }
 
+.banner {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner>h1 {
+    cursor: pointer;
+    font-size: 3rem;
+}
+
+.banner-links {
+    display: flex;
+    gap: 0.5em;
+}
+
+.btn,
+.btn-primary,
+.btn-secondary {
+    display: block;
+    color: var(--text);
+    padding: 0.5em;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    line-height: 1.5rem;
+    border: 1px solid;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: black;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+}
+
+.profile {
+    text-transform: capitalize;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    width: 1.5em;
+}
+
+.admin-links {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+form {
+    display: grid;
+    place-content: center;
+}
+
+.error-ul {
+    list-style-type: disclosure-open;
+    margin: 8px 0;
+}
+
+.error-li {
+    text-shadow: 2px 2px 4px black;
+    color: hsl(340, 80%, 50%);
+}
+
+.error-li::first-letter {
+    text-transform: capitalize;
+}
+
 .pizza-list {
-    border: 1px solid white;
+    border: 1px solid;
 }
 
 .pizza-box {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 2em;
 
     padding: 1em;
@@ -42,7 +118,7 @@ a {
 }
 
 .pizza-box:hover {
-    background-color: rgb(0, 160, 160);
+    background-color: hsl(180, 100%, 30%);
 }
 
 .pizza-link {
