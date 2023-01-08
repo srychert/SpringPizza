@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title},links=~{::link})}">
 		<title>Pizza List</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 	</head>
 
 	<body>
@@ -16,8 +17,19 @@
 						<span class="pizza-link" th:text="${pizza.name}"></span>
 						<span class="pizza-link" th:text="${pizza.price}"></span>
 					</div>
-					<div sec:authorize="hasRole('ROLE_ADMIN')">
-						<a class="btn-secondary" th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}"> Delete </a>
+
+					<div class="actions" sec:authorize="isAuthenticated()">
+						<!-- <div th:if="${user?.favourites != null}"></div> -->
+						<a class="btn-primary" th:if="${user?.favourites?.pizzas?.?[id == __${pizza.id}__]?.isEmpty()}" th:href="${'/favourites/' + {user?.favourites?.id} + '/pizza-add/' + {pizza.id}}">
+							<span class="material-symbols-outlined"> heart_plus </span>
+						</a>
+						<a class="btn-secondary" th:unless="${user?.favourites?.pizzas?.?[id == __${pizza.id}__]?.isEmpty()}" th:if="${user?.favourites != null}" th:href="${'/favourites/' + {user?.favourites?.id} + '/pizza-remove/' + {pizza.id}}">
+							<span class="material-symbols-outlined"> heart_broken </span>
+						</a>
+						<a th:if="${user?.favourites == null}" href="#" class="btn-disabled">
+							<span class="material-symbols-outlined"> heart_plus </span>
+						</a>
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn-secondary" th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}"> Delete </a>
 					</div>
 				</div>
 			</div>

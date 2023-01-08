@@ -27,6 +27,9 @@
 			<div sec:authorize="hasRole('ROLE_ADMIN')">
 				<a class="btn-primary" th:href="@{/user/edit/{id}(id=${user.getId()})}"> Edit </a>
 			</div>
+
+			<a class="btn-primary" th:if="${user.favourites == null}" th:href="@{/favourites/{id}/add(id=${user.getId()})}"> Enable fav </a>
+			<a class="btn-secondary" th:unless="${user.favourites == null}" th:href="${'/favourites/' + {user.id} + '/delete/' + {user?.favourites?.id}}"> Disable fav </a>
 		</div>
 	</body>
 </html>

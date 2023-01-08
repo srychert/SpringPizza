@@ -58,7 +58,8 @@ option:checked {
 
 .btn,
 .btn-primary,
-.btn-secondary {
+.btn-secondary,
+.btn-disabled {
     display: block;
     color: var(--text);
     padding: 0.5em;
@@ -76,6 +77,12 @@ option:checked {
 
 .btn-secondary {
     background-color: var(--secondary);
+}
+
+.btn-disabled {
+    background-color: grey;
+    pointer-events: none;
+    cursor: default;
 }
 
 .profile {
@@ -129,6 +136,11 @@ form {
 .pizza-box:hover,
 .user-box:hover {
     background-color: hsl(180, 100%, 30%);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
 }
 
 .pizza-link,

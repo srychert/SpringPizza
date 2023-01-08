@@ -3,6 +3,8 @@ package pl.srychert.SpringPizza.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.srychert.SpringPizza.domain.Pizza;
 import pl.srychert.SpringPizza.enums.Sorts;
 import pl.srychert.SpringPizza.repository.PizzaRepository;
+import pl.srychert.SpringPizza.repository.UserRepository;
 import pl.srychert.SpringPizza.service.PizzaService;
 
 @Controller
@@ -17,10 +20,13 @@ import pl.srychert.SpringPizza.service.PizzaService;
 public class WebPizzaController {
     private final PizzaService pizzaService;
     private final PizzaRepository pizzaRepository;
+    private final UserRepository userRepository;
 
-    public WebPizzaController(@Autowired PizzaService pizzaService, PizzaRepository pizzaRepository) {
+    public WebPizzaController(@Autowired PizzaService pizzaService,
+                              PizzaRepository pizzaRepository, UserRepository userRepository) {
         this.pizzaService = pizzaService;
         this.pizzaRepository = pizzaRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/list")
@@ -30,6 +36,14 @@ public class WebPizzaController {
         } else {
             model.addAttribute("pizzaList", pizzaService.getAllSortedByPrice(sort));
         }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+
+        userRepository.findByUserName(name).ifPresent(user -> {
+            model.addAttribute("user", user);
+        });
+
         return "pizza-list";
     }
 
