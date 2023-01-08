@@ -28,7 +28,7 @@ public class User {
     private Favourites favourites;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> orders;
 
     public User(String userName, String password, List<String> roles) {

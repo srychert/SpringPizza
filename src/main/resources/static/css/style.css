@@ -15,15 +15,22 @@ a {
     text-decoration: none;
 }
 
-input {
+input,
+select {
     padding: 0.5em;
     border-radius: 5px;
     border: none;
 }
 
-input:focus {
+input:focus,
+select:focus {
     outline: none !important;
     box-shadow: 0 0 10px var(--text);
+}
+
+option:checked {
+    color: black;
+    background-color: var(--primary);
 }
 
 .container-main {
@@ -103,11 +110,13 @@ form {
     text-transform: capitalize;
 }
 
-.pizza-list {
+.pizza-list,
+.user-list {
     border: 1px solid;
 }
 
-.pizza-box {
+.pizza-box,
+.user-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -117,11 +126,23 @@ form {
     transition: 0.3s;
 }
 
-.pizza-box:hover {
+.pizza-box:hover,
+.user-box:hover {
     background-color: hsl(180, 100%, 30%);
 }
 
-.pizza-link {
+.pizza-link,
+.user-link {
     font-size: 2rem;
     cursor: pointer;
+}
+
+.user-roles {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-roles>.user-link {
+    font-size: 1em;
+    margin-left: 1em;
 }

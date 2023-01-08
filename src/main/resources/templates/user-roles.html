@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
+		<title>Edit User Roles</title>
+	</head>
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<form action="#" th:action="@{/user/update/{id}/roles(id=${user.getId()})}" th:object="${user}" method="post">
+				<select name="roles" id="roles" multiple>
+					<option th:each="role : ${roles}" th:value="${role}" th:text="${role}" th:selected="${user.roles.contains(role)}"></option>
+				</select>
+
+				<ul class="error-ul">
+					<li th:each="err : ${#fields.errors('roles')}" th:text="${err}" class="error-li" />
+				</ul>
+
+				<input class="btn-primary" type="submit" value="Edit User" />
+			</form>
+		</div>
+	</body>
+</html>

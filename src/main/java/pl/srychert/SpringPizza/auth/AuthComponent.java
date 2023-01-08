@@ -34,10 +34,21 @@ public class AuthComponent {
         return user.map(User::getId).orElse(null);
     }
 
+    public String getUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
     public boolean isAccountOwner(Long id) {
         Long userId = getUserId();
 
         return id.equals(userId);
+    }
+
+    public boolean isAccountOwnerByName(String name) {
+        String userName = getUserName();
+
+        return name.equals(userName);
     }
 
     public boolean isOrderOwner(Long orderId) {

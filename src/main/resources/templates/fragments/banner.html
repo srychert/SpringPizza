@@ -6,7 +6,7 @@
 			<h1 th:onclick="'window.location.href=\'/pizza/list' + '\''">Spring Pizza 🍕</h1>
 			<div class="banner-links" sec:authorize="isAuthenticated()">
 				<a class="btn-secondary" th:href="@{/logout}"> Logout </a>
-				<a class="btn-primary profile" th:href="@{/profile/{name}(name=${#authentication.name})}" th:text="${#strings.substring(#authentication.name, 0, 1)}"> </a>
+				<a class="btn-primary profile" th:href="@{/user/name/{name}(name=${#authentication.name})}" th:text="${#strings.substring(#authentication.name, 0, 1)}"> </a>
 			</div>
 			<div sec:authorize="!isAuthenticated()">
 				<a class="btn-primary" th:href="@{/login}"> Login </a>

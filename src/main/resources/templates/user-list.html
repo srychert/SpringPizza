@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
+		<title>User List</title>
+	</head>
+
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<div class="admin-links" sec:authorize="hasRole('ROLE_ADMIN')">
+				<a class="btn-secondary" th:href="@{/user/add}"> Add </a>
+			</div>
+			<div class="user-list">
+				<div class="user-box" th:each="user : ${userList}">
+					<div th:onclick="'window.location.href=\'/user/' + ${user.getId()} + '\''">
+						<span class="user-link" th:text="${user.userName}"></span>
+						<div class="user-roles">
+							<span class="user-link" th:each="role : ${user.roles}" th:text="${role}"> </span>
+						</div>
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="btn-secondary" th:href="@{/user/delete/{id}(id=${user.getId()})}"> Delete </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

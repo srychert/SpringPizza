@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
+		<title>Add User</title>
+	</head>
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<form action="#" th:action="@{/user/add}" th:object="${user}" method="post">
+				<label for="userName">UserName</label>
+				<input type="text" th:field="*{userName}" id="userName" placeholder="UserName" required />
+				<ul class="error-ul">
+					<li th:each="err : ${#fields.errors('userName')}" th:text="${err}" class="error-li" />
+				</ul>
+
+				<label for="password">Password</label>
+				<input type="password" th:field="*{password}" id="password" placeholder="******" required />
+				<ul class="error-ul">
+					<li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="error-li" />
+				</ul>
+
+				<select name="roles" id="roles" multiple>
+					<option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+				</select>
+
+				<ul class="error-ul">
+					<li th:each="err : ${#fields.errors('roles')}" th:text="${err}" class="error-li" />
+				</ul>
+
+				<input class="btn-primary" type="submit" value="Add User" />
+			</form>
+		</div>
+	</body>
+</html>

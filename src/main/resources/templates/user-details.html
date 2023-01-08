@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title},scripts=~{::script})}">
+		<title>User Details</title>
+	</head>
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<div>
+				ID: <span th:text="${user.id}"></span><br />
+				UserName: <span th:text="${user.userName}"></span><br />
+				Roles:
+				<div class="user-roles">
+					<span class="user-link" th:each="role : ${user.roles}" th:text="${role}"> </span>
+				</div>
+				Favourites:
+				<div class="user-fav">
+					<span class="user-link" th:each="pizza : ${user?.favourites?.pizzas}" th:text="${pizza?.name}"> </span>
+				</div>
+				Orders:
+				<div class="user-fav">
+					<div class="user-link" th:each="order : ${user?.orders}">
+						<span th:each="pizza : ${order?.pizzas}" th:text="${pizza?.name}"> </span>
+					</div>
+				</div>
+			</div>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<a class="btn-primary" th:href="@{/user/edit/{id}(id=${user.getId()})}"> Edit </a>
+			</div>
+		</div>
+	</body>
+</html>
