@@ -10,7 +10,6 @@ import pl.srychert.SpringPizza.service.UserService;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/users")
@@ -31,7 +30,7 @@ public class UserController {
 
     @GetMapping(path = "{userId}")
     @PreAuthorize("@authComponent.isAccountOwner(#id) or hasRole('ROLE_ADMIN')")
-    public Optional<User> get(@PathVariable("userId") Long id) {
+    public User get(@PathVariable("userId") Long id) {
         return userService.get(id);
     }
 

@@ -28,8 +28,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> get(Long id) {
-        return userRepository.findById(id);
+    public User get(Long id) {
+        return userRepository
+                .findById(id)
+                .orElseThrow(() -> new ApiRequestException("No such User id in DB"));
+    }
+
+    public User getByUserName(String userName) {
+        return userRepository
+                .findByUserName(userName)
+                .orElseThrow(() -> new ApiRequestException("No such User userName in DB"));
     }
 
     public User add(User user) {
@@ -97,6 +105,10 @@ public class UserService {
         if (userRepository.findByUserName(username).isPresent()) {
             throw new ApiRequestException("Duplicate userName field");
         }
+    }
+
+    public List<String> getAllRoles() {
+        return List.of("ROLE_USER", "ROLE_ADMIN");
     }
 
 }
