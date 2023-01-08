@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
+		<title>Favourites List</title>
+	</head>
+
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<div class="user-list">
+				<div class="user-box" th:each="fav : ${favList}">
+					<div th:onclick="'window.location.href=\'/user/' + ${fav?.client?.id} + '\''">
+						<span class="user-link"> Favourites of user: <span th:text="${fav?.client?.userName}"></span> </span>
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="btn-secondary" th:href="${'/favourites/' + {fav?.client?.id} + '/delete/' + {fav.id}}"> Delete </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
