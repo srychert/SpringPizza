@@ -22,6 +22,14 @@ public class PizzaService {
         return pizzaRepository.findAll();
     }
 
+    public Iterable<Pizza> getAll(Sorts sort) {
+        if (sort == null) {
+            return getAllByPriceAsc();
+        }
+
+        return getAllSortedByPrice(sort);
+    }
+
     public Iterable<Pizza> getAllByPriceAsc() {
         return pizzaRepository.findAllByOrderByPriceAsc();
     }

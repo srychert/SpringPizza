@@ -31,11 +31,8 @@ public class WebPizzaController {
 
     @GetMapping("/list")
     String getPizzaList(@RequestParam(required = false) Sorts sort, Model model) {
-        if (sort == null) {
-            model.addAttribute("pizzaList", pizzaService.getAllByPriceAsc());
-        } else {
-            model.addAttribute("pizzaList", pizzaService.getAllSortedByPrice(sort));
-        }
+
+        model.addAttribute("pizzaList", pizzaService.getAll(sort));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
