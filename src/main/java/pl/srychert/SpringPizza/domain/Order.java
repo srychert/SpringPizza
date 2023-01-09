@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -25,5 +26,13 @@ public class Order {
     private User client;
 
     public Order() {
+    }
+
+    public BigDecimal getTotal() {
+        if (pizzas == null) {
+            return new BigDecimal(0);
+        }
+
+        return pizzas.stream().map(Pizza::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

@@ -179,3 +179,9 @@ form {
     font-size: 1em;
     margin-left: 1em;
 }
+
+.order-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+}
