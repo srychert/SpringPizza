@@ -30,9 +30,10 @@ public class WebPizzaController {
     }
 
     @GetMapping("/list")
-    String getPizzaList(@RequestParam(required = false) Sorts sort, Model model) {
+    String getPizzaList(@RequestParam(required = false, defaultValue = "ASC") Sorts sort, Model model) {
 
         model.addAttribute("pizzaList", pizzaService.getAll(sort));
+        model.addAttribute("sort", sort.toString());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
