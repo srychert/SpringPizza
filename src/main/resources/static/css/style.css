@@ -136,12 +136,14 @@ form {
 }
 
 .pizza-list,
-.user-list {
+.user-list,
+.order-list {
     border: 1px solid;
 }
 
 .pizza-box,
-.user-box {
+.user-box,
+.order-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -152,7 +154,8 @@ form {
 }
 
 .pizza-box:hover,
-.user-box:hover {
+.user-box:hover,
+.order-box:hover {
     background-color: hsl(180, 100%, 30%);
 }
 

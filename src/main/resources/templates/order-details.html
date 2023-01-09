@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title},scripts=~{::script})}">
+		<title>Order Details</title>
+		<script type="text/javascript" th:src="@{/js/actions.js}" defer></script>
+	</head>
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<div>ID: <span th:text="${order.id}"></span></div>
+			<div class="pizza-list">
+				<div class="pizza-box" th:each="pizza : ${order.pizzas}">
+					<div th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''">
+						<span class="pizza-link" th:text="${pizza.name}"></span>
+						<span class="pizza-link" th:text="${pizza.price}"></span>
+					</div>
+				</div>
+			</div>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<a class="btn-primary" th:href="@{/order/edit/{id}(id=${order.getId()})}"> Edit </a>
+			</div>
+		</div>
+	</body>
+</html>

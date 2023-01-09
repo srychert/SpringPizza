@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments/header.html :: common_header(title=~{::title})}">
+		<title>Order List</title>
+	</head>
+
+	<body>
+		<div class="container-main">
+			<div th:replace="~{fragments/banner.html :: banner}"></div>
+			<div class="order-list">
+				<div class="order-box" th:each="order : ${orderList}">
+					<div th:onclick="'window.location.href=\'/user/' + ${order.client.id} + '\''">
+						<span class="user-link">Client: </span>
+						<span class="user-link" th:text="${order.client.userName}"></span>
+						<!-- order total here -->
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="btn-primary" th:href="@{/order/{id}(id=${order.getId()})}"> Details </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
