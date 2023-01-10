@@ -18,9 +18,9 @@
 					<span class="user-link" th:each="pizza : ${user?.favourites?.pizzas}" th:text="${pizza?.name}"> </span>
 				</div>
 				Orders:
-				<div class="user-fav">
-					<div class="user-link" th:each="order : ${user?.orders}">
-						<span th:each="pizza : ${order?.pizzas}" th:text="${pizza?.name}"> </span>
+				<div class="user-order">
+					<div th:each="order : ${user?.orders}">
+						<span class="user-link" th:text="${order.getTotal()}" th:onclick="'window.location.href=\'/order/' + ${order.id} + '\''"> </span>
 					</div>
 				</div>
 			</div>

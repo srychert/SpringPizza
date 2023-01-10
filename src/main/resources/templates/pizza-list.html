@@ -4,6 +4,7 @@
 		<title>Pizza List</title>
 		<script type="text/javascript" th:src="@{/js/actions.js}" defer></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+		<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 	</head>
 
 	<body>
@@ -26,7 +27,7 @@
 					</div>
 
 					<div class="actions" sec:authorize="isAuthenticated()">
-						<!-- <div th:if="${user?.favourites != null}"></div> -->
+						<input type="checkbox" th:id="'checkbox-' + ${pizza.id}" class="checkbox-pizza" th:attr="data-pizzaid=${pizza.id},data-pizzaprice=${pizza.price}" />
 						<a class="btn-primary" th:if="${user?.favourites?.pizzas?.?[id == __${pizza.id}__]?.isEmpty()}" th:href="${'/favourites/' + {user?.favourites?.id} + '/pizza-add/' + {pizza.id}}">
 							<span class="material-symbols-outlined"> heart_plus </span>
 						</a>
@@ -39,6 +40,9 @@
 						<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn-secondary" th:href="@{/pizza/delete/{id}(id=${pizza.getId()})}"> Delete </a>
 					</div>
 				</div>
+			</div>
+			<div class="" sec:authorize="isAuthenticated()">
+				<a id="order" class="btn-primary" th:attr="data-username=${user.userName},data-userid=${user.id}"> Order </a>
 			</div>
 		</div>
 	</body>

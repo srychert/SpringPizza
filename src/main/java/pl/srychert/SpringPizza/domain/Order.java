@@ -2,6 +2,7 @@ package pl.srychert.SpringPizza.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class Order {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @NotNull
+    @Size(min = 1)
     private List<Pizza> pizzas;
 
     @ManyToOne
