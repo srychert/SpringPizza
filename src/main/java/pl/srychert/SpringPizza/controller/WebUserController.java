@@ -14,6 +14,8 @@ import pl.srychert.SpringPizza.domain.User;
 import pl.srychert.SpringPizza.repository.UserRepository;
 import pl.srychert.SpringPizza.service.UserService;
 
+import java.util.HashMap;
+
 @Controller
 @RequestMapping("user")
 public class WebUserController {
@@ -42,14 +44,22 @@ public class WebUserController {
     @GetMapping("/{userId}")
     @PreAuthorize("@authComponent.isAccountOwner(#userId) or hasRole('ROLE_ADMIN')")
     String getUser(@PathVariable Long userId, Model model) {
-        model.addAttribute("user", userService.get(userId));
+        User user = userService.get(userId);
+        HashMap<Long, Integer> occurrences = userService.countPizzaOccurrencesInOrders(user);
+
+        model.addAttribute("user", user);
+        model.addAttribute("occurrences", occurrences);
         return "user-details";
     }
 
     @GetMapping("/name/{userName}")
     @PreAuthorize("@authComponent.isAccountOwnerByName(#userName) or hasRole('ROLE_ADMIN')")
     String getUserByName(@PathVariable String userName, Model model) {
-        model.addAttribute("user", userService.getByUserName(userName));
+        User user = userService.getByUserName(userName);
+        HashMap<Long, Integer> occurrences = userService.countPizzaOccurrencesInOrders(user);
+
+        model.addAttribute("user", user);
+        model.addAttribute("occurrences", occurrences);
         return "user-details";
     }
 

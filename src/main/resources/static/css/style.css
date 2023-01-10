@@ -33,6 +33,27 @@ option:checked {
     background-color: var(--primary);
 }
 
+table,
+th,
+td {
+    border: 1px solid;
+}
+
+td {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+th {
+    font-size: 1.5rem;
+}
+
+.roles-td {
+    display: grid;
+    place-content: center;
+    text-align: left;
+}
+
 .container-main {
     max-width: 1000px;
     margin-left: auto;
@@ -204,4 +225,13 @@ form {
     aspect-ratio: 1/1;
     width: 3rem;
     accent-color: var(--secondary);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.font-big {
+    font-size: 2rem;
 }

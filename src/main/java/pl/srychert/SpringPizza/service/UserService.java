@@ -4,12 +4,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.srychert.SpringPizza.domain.Pizza;
 import pl.srychert.SpringPizza.domain.User;
 import pl.srychert.SpringPizza.exception.ApiRequestException;
 import pl.srychert.SpringPizza.repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -109,6 +109,20 @@ public class UserService {
 
     public List<String> getAllRoles() {
         return List.of("ROLE_USER", "ROLE_ADMIN");
+    }
+
+    public HashMap<Long, Integer> countPizzaOccurrencesInOrders(User user) {
+        var list = user.getOrders()
+                .stream().map(order -> order.getPizzas().stream().map(Pizza::getId).toList())
+                .flatMap(List::stream).toList();
+
+        Set<Long> distinct = new HashSet<>(list);
+        var occurrences = new HashMap<Long, Integer>();
+        for (Long l : distinct) {
+            occurrences.put(l, Collections.frequency(list, l));
+        }
+
+        return occurrences;
     }
 
 }

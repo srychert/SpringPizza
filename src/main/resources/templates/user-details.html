@@ -6,18 +6,38 @@
 	<body>
 		<div class="container-main">
 			<div th:replace="~{fragments/banner.html :: banner}"></div>
-			<div>
-				ID: <span th:text="${user.id}"></span><br />
-				UserName: <span th:text="${user.userName}"></span><br />
-				Roles:
-				<div class="user-roles">
-					<span class="user-link" th:each="role : ${user.roles}" th:text="${role}"> </span>
-				</div>
-				Favourites:
-				<div class="user-fav">
-					<span class="user-link" th:each="pizza : ${user?.favourites?.pizzas}" th:text="${pizza?.name}"> </span>
-				</div>
-				Orders:
+			<div class="user-details">
+				<table style="width: 100%">
+					<tr>
+						<th>ID</th>
+						<th>UserName</th>
+						<th>Roles</th>
+					</tr>
+					<tr>
+						<td th:text="${user.id}"></td>
+						<td th:text="${user.userName}"></td>
+						<td class="roles-td">
+							<span th:each="role : ${user.roles}" th:text="${role}"></span>
+						</td>
+					</tr>
+				</table>
+				<h2>Favourites:</h2>
+				<table style="width: 100%">
+					<tr>
+						<th>Pizza</th>
+						<th>Price</th>
+						<th>Number of orders</th>
+					</tr>
+					<tr th:each="pizza : ${user?.favourites?.pizzas}">
+						<td th:text="${pizza.name}"></td>
+						<td th:text="${pizza.price}"></td>
+						<td th:text="${occurrences.get(pizza.id)}"></td>
+					</tr>
+				</table>
+				<!-- <div class="user-fav">
+					<span th:each="pizza : ${user?.favourites?.pizzas}" th:text="${pizza?.name}" class="pizza-link" th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''"> </span>
+				</div> -->
+				<h2>Orders:</h2>
 				<div class="user-order">
 					<div th:each="order : ${user?.orders}">
 						<span class="user-link" th:text="${order.getTotal()}" th:onclick="'window.location.href=\'/order/' + ${order.id} + '\''"> </span>
