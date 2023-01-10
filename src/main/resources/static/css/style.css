@@ -54,6 +54,11 @@ th {
     text-align: left;
 }
 
+.order-td:hover {
+    cursor: pointer;
+    background-color: hsl(180, 100%, 30%);
+}
+
 .container-main {
     max-width: 1000px;
     margin-left: auto;
@@ -234,4 +239,8 @@ form {
 
 .font-big {
     font-size: 2rem;
+}
+
+.btn-sec {
+    margin-top: 8px;
 }

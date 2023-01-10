@@ -11,7 +11,7 @@
 				Name: <span th:text="${pizza.name}"></span><br />
 				Price: <span th:text="${pizza.price}"></span>
 			</div>
-			<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<div sec:authorize="hasRole('ROLE_ADMIN')" class="btn-sec">
 				<a class="btn-primary" th:href="@{/pizza/edit/{id}(id=${pizza.getId()})}"> Edit </a>
 			</div>
 		</div>

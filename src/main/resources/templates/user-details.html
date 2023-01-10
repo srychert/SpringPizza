@@ -34,22 +34,24 @@
 						<td th:text="${occurrences.get(pizza.id)}"></td>
 					</tr>
 				</table>
-				<!-- <div class="user-fav">
-					<span th:each="pizza : ${user?.favourites?.pizzas}" th:text="${pizza?.name}" class="pizza-link" th:onclick="'window.location.href=\'/pizza/' + ${pizza.getId()} + '\''"> </span>
-				</div> -->
 				<h2>Orders:</h2>
-				<div class="user-order">
-					<div th:each="order : ${user?.orders}">
-						<span class="user-link" th:text="${order.getTotal()}" th:onclick="'window.location.href=\'/order/' + ${order.id} + '\''"> </span>
-					</div>
-				</div>
+				<table style="width: 100%">
+					<tr>
+						<th>ID</th>
+						<th>Total</th>
+					</tr>
+					<tr th:each="order : ${user?.orders}">
+						<td th:text="${order.id}" class="order-td" th:onclick="'window.location.href=\'/order/' + ${order.id} + '\''"></td>
+						<td th:text="${order.total}"></td>
+					</tr>
+				</table>
 			</div>
-			<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<div sec:authorize="hasRole('ROLE_ADMIN')" class="btn-sec">
 				<a class="btn-primary" th:href="@{/user/edit/{id}(id=${user.getId()})}"> Edit </a>
 			</div>
 
-			<a class="btn-primary" th:if="${user.favourites == null}" th:href="@{/favourites/{id}/add(id=${user.getId()})}"> Enable fav </a>
-			<a class="btn-secondary" th:unless="${user.favourites == null}" th:href="${'/favourites/' + {user.id} + '/delete/' + {user?.favourites?.id}}"> Disable fav </a>
+			<a class="btn-primary btn-sec" th:if="${user.favourites == null}" th:href="@{/favourites/{id}/add(id=${user.getId()})}"> Enable fav </a>
+			<a class="btn-secondary btn-sec" th:unless="${user.favourites == null}" th:href="${'/favourites/' + {user.id} + '/delete/' + {user?.favourites?.id}}"> Disable fav </a>
 		</div>
 	</body>
 </html>

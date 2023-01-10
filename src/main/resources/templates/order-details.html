@@ -15,7 +15,7 @@
 					</div>
 				</div>
 			</div>
-			<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<div sec:authorize="hasRole('ROLE_ADMIN')" class="btn-sec">
 				<a class="btn-primary" th:href="@{/order/edit/{id}(id=${order.getId()})}"> Edit </a>
 			</div>
 		</div>
